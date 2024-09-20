@@ -17,15 +17,7 @@ Este portafolio está construido con las siguientes tecnologías:
 - 📂 **React Bootstrap** - Para componentes estilizados y diseño responsivo.
 - ✨ **CSS3** - Estilización adicional y personalizada.
 
-## 🚀 Cómo empezar
-
-Para ejecutar el proyecto, simplemente clona el repositorio y corre los siguientes comandos:
-
-```bash
-npm install
-npm start
-
-## ✨ Funcionalidades
+  ## ✨ Funcionalidades
 
 - **📄 Diseño de múltiples páginas**: Navega a través de las distintas secciones para conocer mis proyectos, habilidades y CV.
 - **💻 Completamente Responsivo**: El portafolio está diseñado para verse bien en cualquier dispositivo, desde móviles hasta pantallas grandes.
@@ -38,3 +30,12 @@ Dentro de la carpeta `src/components/` encontrarás todos los componentes que fo
 ---
 
 ¡Gracias por pasarte por mi portafolio! 😄
+
+## 🚀 Cómo Ejecutar
+
+Para ejecutar el proyecto, simplemente clona el repositorio y corre los siguientes comandos:
+
+```bash
+npm install
+npm start
+
