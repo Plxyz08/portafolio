@@ -4,7 +4,7 @@
 
 ## 🌐 Demo en vivo
 
-Visita mi portafolio en [mi sitio web](https://tu-sitio-vercel.com) para conocer más sobre mis proyectos y habilidades.
+Visita mi portafolio en [mi sitio web](https://portafolio-plxyz08s-projects.vercel.app/) para conocer más sobre mis proyectos y habilidades.
 
 ## 🛠️ Tecnologías Utilizadas
 
@@ -25,7 +25,7 @@ Este portafolio está construido con las siguientes tecnologías:
 
 ## 📂 Estructura del Proyecto
 
-Dentro de la carpeta `src/components/` encontrarás todos los componentes que forman este portafolio. ¡Siente libre de modificar o añadir lo que necesites!
+Dentro de la carpeta `src/components/` encontrarás todos los componentes que forman este portafolio.
 
 ---
 
