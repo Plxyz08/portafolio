@@ -122,8 +122,8 @@ export function Hero({ lang }: { lang: Lang }) {
 
 /**
  * El bloque de métricas es la pieza más importante de la página:
- * es lo único que separa este perfil de cualquier otro. Cifra grande
- * en serif, rótulo en texto, y una marca de acento sobre cada filete.
+ * es lo único que separa este perfil de cualquier otro. Cifra grande en
+ * cifras tabulares, rótulo en texto, y una marca de acento sobre el filete.
  */
 export function Metrics({ lang }: { lang: Lang }) {
   const c = copy[lang]
@@ -141,7 +141,10 @@ export function Metrics({ lang }: { lang: Lang }) {
 
         <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-10 lg:grid-cols-4">
           {metrics.map((m, i) => (
-            <div key={m.value + t(m.label, lang)} className="relative border-t border-line pt-6">
+            <div
+              key={m.value + t(m.label, lang)}
+              className="reveal relative border-t border-line pt-6"
+            >
               <span aria-hidden="true" className="absolute -top-px left-0 h-px w-9 bg-accent" />
 
               <span
@@ -182,13 +185,15 @@ export function Metrics({ lang }: { lang: Lang }) {
  */
 function SectionHead({ id, title, intro }: { id: string; title: string; intro?: string }) {
   return (
-    <div>
+    <div className="reveal">
       <span aria-hidden="true" className="block h-px w-9 bg-accent" />
+      {/* El título entra con un barrido de clip-path, no con un simple
+          fundido: es el gesto que marca el cambio de sección. */}
       <div className="mt-5 flex items-center gap-6">
-        <h2 id={id} className="h2 shrink-0">
+        <h2 id={id} className="wipe h2 shrink-0">
           {title}
         </h2>
-        <span aria-hidden="true" className="h-px flex-1 bg-line" />
+        <span aria-hidden="true" className="rule-grow h-px flex-1 bg-line" />
       </div>
       {intro && <p className="lede measure mt-5">{intro}</p>}
     </div>
@@ -199,7 +204,7 @@ export function Experience({ lang }: { lang: Lang }) {
   const c = copy[lang]
 
   return (
-    <section id="experiencia" className="section" aria-labelledby="h-experiencia">
+    <section id="experiencia" className="section hand-off" aria-labelledby="h-experiencia">
       <div className="wrap">
         <SectionHead
           id="h-experiencia"
@@ -211,7 +216,7 @@ export function Experience({ lang }: { lang: Lang }) {
             paralelos y no una lista suelta de empleos. */}
         <ol className="mt-14 space-y-12 sm:space-y-14">
           {jobs.map((job) => (
-            <li key={job.id} className="grid gap-5 lg:grid-cols-[15rem_1fr] lg:gap-12">
+            <li key={job.id} className="reveal grid gap-5 lg:grid-cols-[15rem_1fr] lg:gap-12">
               <div className="lg:pt-1">
                 <p className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-fg">
                   {t(job.period, lang)}
@@ -220,6 +225,12 @@ export function Experience({ lang }: { lang: Lang }) {
               </div>
 
               <div className="relative border-l border-line pl-6 sm:pl-8">
+                {/* El riel se rellena de acento conforme bajas: convierte la
+                    lista en una línea de tiempo sin añadir una palabra. */}
+                <span
+                  aria-hidden="true"
+                  className="rail-fill absolute -left-px top-0 h-full w-px bg-accent"
+                />
                 <span
                   aria-hidden="true"
                   className="absolute -left-[3.5px] top-2 h-[7px] w-[7px] rounded-full bg-accent"
@@ -415,7 +426,7 @@ function ProductCard({ product: p, lang }: { product: (typeof products)[number];
 
   return (
     <article
-      className={`card card-hover ${p.flagship ? 'relative overflow-hidden border-line-strong' : ''}`}
+      className={`reveal card card-hover ${p.flagship ? 'relative overflow-hidden border-line-strong' : ''}`}
     >
       {p.flagship && (
         <span aria-hidden="true" className="absolute inset-x-0 top-0 h-[3px] bg-accent" />
@@ -488,7 +499,7 @@ export function Products({ lang }: { lang: Lang }) {
   const independent = products.filter((p) => p.owner === 'independent')
 
   return (
-    <section id="productos" className="section" aria-labelledby="h-productos">
+    <section id="productos" className="section hand-off" aria-labelledby="h-productos">
       <div className="wrap">
         <SectionHead
           id="h-productos"
@@ -544,7 +555,7 @@ export function Projects({ lang }: { lang: Lang }) {
   const rest = projects.filter((p) => !p.featured)
 
   return (
-    <section id="proyectos" className="section" aria-labelledby="h-proyectos">
+    <section id="proyectos" className="section hand-off" aria-labelledby="h-proyectos">
       <div className="wrap">
         <SectionHead
           id="h-proyectos"
@@ -554,7 +565,7 @@ export function Projects({ lang }: { lang: Lang }) {
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((p) => (
-            <article key={p.id} className="card card-hover flex flex-col p-0">
+            <article key={p.id} className="reveal card card-hover flex flex-col p-0">
               {/* Cada archivo trae su propio fondo de marca horneado, así que
                   van a sangre: contenerlos los dejaría como una calcomanía
                   flotando sobre un panel de otro color.
@@ -646,13 +657,13 @@ export function Testimonials({ lang }: { lang: Lang }) {
   const c = copy[lang]
 
   return (
-    <section className="section" aria-labelledby="h-referencias">
+    <section className="section hand-off" aria-labelledby="h-referencias">
       <div className="wrap">
         <SectionHead id="h-referencias" title={c.sections.testimonials.title} />
 
         <div className="mt-14 grid gap-5 lg:grid-cols-2">
           {testimonials.map((tm) => (
-            <figure key={tm.id} className="card flex flex-col">
+            <figure key={tm.id} className="reveal card flex flex-col">
               <span
                 aria-hidden="true"
                 className="display block text-[2.5rem] leading-[0.5] text-accent"
@@ -698,13 +709,13 @@ export function AiPractice({ lang }: { lang: Lang }) {
   const ai = aiPractice[lang]
 
   return (
-    <section className="section" aria-labelledby="h-ia">
+    <section className="section hand-off" aria-labelledby="h-ia">
       <div className="wrap">
         <SectionHead id="h-ia" title={ai.title} intro={ai.lede} />
 
         <dl className="mt-14 grid gap-x-10 gap-y-10 md:grid-cols-3">
           {ai.points.map((p) => (
-            <div key={p.k} className="relative border-t border-line pt-6">
+            <div key={p.k} className="reveal relative border-t border-line pt-6">
               <span aria-hidden="true" className="absolute -top-px left-0 h-px w-9 bg-accent" />
               <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-muted">
                 {p.k}
@@ -724,7 +735,7 @@ export function Stack({ lang }: { lang: Lang }) {
   const c = copy[lang]
 
   return (
-    <section className="section" aria-labelledby="h-stack">
+    <section className="section hand-off" aria-labelledby="h-stack">
       <div className="wrap">
         <SectionHead id="h-stack" title={c.sections.stack.title} />
 
@@ -758,7 +769,7 @@ export function Education({ lang }: { lang: Lang }) {
   const c = copy[lang]
 
   return (
-    <section className="section" aria-labelledby="h-formacion">
+    <section className="section hand-off" aria-labelledby="h-formacion">
       <div className="wrap">
         <SectionHead id="h-formacion" title={c.sections.education.title} />
 

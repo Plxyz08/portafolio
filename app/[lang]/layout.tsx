@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { Instrument_Sans, Instrument_Serif, JetBrains_Mono } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import '@/app/globals.css'
 import { LANGS, type Lang, copy, identity } from '@/content/site'
 import SiteHeader from '@/components/site-header'
@@ -10,31 +10,27 @@ import SiteFooter from '@/components/site-footer'
  * Tipografía — self-hosted por next/font. Cero peticiones a terceros,
  * cero layout shift (métricas de respaldo generadas en build).
  *
- *  · Instrument Sans   → interfaz, titulares y texto.
- *  · Instrument Serif  → exclusivamente los números de las métricas y el
- *                        titular del caso de estudio. Nada más.
- *  · JetBrains Mono    → rótulos, fechas, estados y etiquetas técnicas.
+ *  · Geist       → interfaz, titulares, texto y las cifras de las métricas.
+ *  · Geist Mono  → rótulos, fechas, estados y etiquetas técnicas.
+ *
+ * Dos familias de la misma superfamilia: comparten esqueleto y métricas, así
+ * que mezclarlas en una misma línea no produce saltos ópticos. Sus cifras
+ * tabulares son la razón por la que el bloque de métricas ya no necesita una
+ * serif prestada para tener carácter.
  */
-const sans = Instrument_Sans({
+const sans = Geist({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-sans',
 })
 
-const serif = Instrument_Serif({
-  subsets: ['latin'],
-  weight: '400',
-  display: 'swap',
-  variable: '--font-serif',
-})
-
-const mono = JetBrains_Mono({
+const mono = Geist_Mono({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-mono',
 })
 
-const fontVars = `${sans.variable} ${serif.variable} ${mono.variable}`
+const fontVars = `${sans.variable} ${mono.variable}`
 
 export function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }))

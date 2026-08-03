@@ -2,13 +2,13 @@
   <title>Sebastián Aparicio</title>
   <!--
     La teja se invierte con el tema del navegador para no desaparecer contra
-    la barra de pestañas: tinta sobre claro, papel sobre oscuro. El ámbar
+    la barra de pestañas: tinta sobre claro, papel sobre oscuro. El azul
     cambia con ella para conservar el contraste sobre la teja.
   -->
   <style>
-    :root { --tile: #141311; --stroke: #FCFBF9; --mark: #FF9166; }
+    :root { --tile: #0B1622; --stroke: #F8FAFD; --mark: #56B6FF; }
     @media (prefers-color-scheme: dark) {
-      :root { --tile: #EDEBE6; --stroke: #0B0B0C; --mark: #B03A16; }
+      :root { --tile: #E2EBF5; --stroke: #070C14; --mark: #0B63CE; }
     }
   </style>
   <rect width="64" height="64" rx="14" fill="var(--tile)"/>

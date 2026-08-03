@@ -75,6 +75,14 @@ export default async function CaseStudyPage({
         }}
       />
 
+      {/* Progreso de lectura, ligado al scroll del documento. Sin soporte
+          para `animation-timeline` la barra se queda en scaleX(0), o sea
+          invisible: el respaldo es su ausencia, no un elemento roto. */}
+      <div
+        aria-hidden="true"
+        className="read-progress fixed inset-x-0 top-0 z-50 h-[3px] bg-accent"
+      />
+
       <article className="wrap py-12 sm:py-16">
         <nav aria-label={l === 'es' ? 'Ruta de navegación' : 'Breadcrumb'} className="mb-12">
           <Link
@@ -93,13 +101,12 @@ export default async function CaseStudyPage({
               {c.sections.caseStudy.title} · {cs.product}
             </p>
 
-            {/* Único uso del serif fuera de las métricas: el titular del caso. */}
             <h1 className="display mt-6 text-[clamp(2.25rem,6vw,4rem)]">{t(cs.title, l)}</h1>
 
             <p className="lede measure mt-7">{t(cs.summary, l)}</p>
           </header>
 
-          <dl className="mt-14 grid gap-x-8 gap-y-7 border-y border-line py-7 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="reveal mt-14 grid gap-x-8 gap-y-7 border-y border-line py-7 sm:grid-cols-2 lg:grid-cols-4">
             {cs.meta[l].map((m) => (
               <div key={m.k}>
                 <dt className="font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-muted">
@@ -112,7 +119,7 @@ export default async function CaseStudyPage({
 
           <div className="mt-16 space-y-16">
             {cs.sections.map((s, i) => (
-              <section key={s.key} aria-labelledby={`cs-${s.key}`}>
+              <section key={s.key} className="reveal" aria-labelledby={`cs-${s.key}`}>
                 <div className="flex items-baseline gap-4">
                   <span
                     aria-hidden="true"

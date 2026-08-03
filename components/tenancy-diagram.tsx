@@ -71,7 +71,8 @@ function Before({ lang }: { lang: Lang }) {
             {/* Conector */}
             <path
               d={`M${x + 44} 90 L${x + 44} 122`}
-              className="stroke-line-strong"
+              pathLength={1}
+              className="draw stroke-line-strong"
               strokeWidth={1.25}
             />
             <path
@@ -137,8 +138,9 @@ function After({ lang }: { lang: Lang }) {
             {/* Converge hacia el despliegue único */}
             <path
               d={`M${x + 42} 32 C ${x + 42} 48, 160 44, 160 62`}
+              pathLength={1}
               fill="none"
-              className="stroke-line-strong"
+              className="draw stroke-line-strong"
               strokeWidth={1.25}
             />
           </g>
@@ -153,7 +155,12 @@ function After({ lang }: { lang: Lang }) {
       </text>
 
       {/* Conector al almacenamiento */}
-      <path d="M160 108 L160 128" className="stroke-line-strong" strokeWidth={1.25} />
+      <path
+        d="M160 108 L160 128"
+        pathLength={1}
+        className="draw stroke-line-strong"
+        strokeWidth={1.25}
+      />
       <path
         d="M156 122 L160 128 L164 122"
         fill="none"
@@ -193,39 +200,56 @@ function After({ lang }: { lang: Lang }) {
   )
 }
 
+/**
+ * ESCENARIO FIJADO — el único del sitio.
+ *
+ * La sección mide 240vh y su hijo queda `sticky`: mientras la atraviesas, el
+ * panel se queda quieto y el «antes» se convierte en el «hoy». Es el patrón
+ * de la referencia, pero usado una sola vez y donde el movimiento explica
+ * algo — la migración ES un cambio de estado.
+ *
+ * Sin soporte para `animation-timeline`, o con prefers-reduced-motion, no se
+ * aplica NADA de lo anterior: la sección recupera su altura natural y los dos
+ * paneles se ven uno al lado del otro, como antes. El respaldo no es una
+ * versión rota, es la maqueta estática de siempre.
+ */
 export default function TenancyDiagram({ lang }: { lang: Lang }) {
   const d = caseDiagram[lang]
 
   return (
-    <figure className="my-12">
-      <div className="grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
-        <div className="bg-card p-5 sm:p-6">
-          <p className="eyebrow">{d.before.label}</p>
-          <div className="mt-5">
-            <Before lang={lang} />
+    <figure className="pin-scope my-12">
+      <div className="pin-stage">
+        <div className="w-full">
+          {/* Rótulo de fase: se releva a la mitad del recorrido. */}
+          <div className="relative mb-4 h-5">
+            <p className="pin-rotulo-antes eyebrow absolute inset-0">{d.before.label}</p>
+            <p className="pin-rotulo-hoy eyebrow absolute inset-0 text-accent">{d.after.label}</p>
           </div>
-          <p className="mt-5 border-t border-line pt-4 text-[0.8125rem] leading-[1.55] text-muted">
-            {d.before.note}
-          </p>
-        </div>
 
-        <div className="bg-card p-5 sm:p-6">
-          <p className="eyebrow text-accent">{d.after.label}</p>
-          <div className="mt-5">
-            <After lang={lang} />
+          <div className="pin-layers grid gap-px overflow-hidden rounded-xl border border-line bg-line sm:grid-cols-2">
+            <div className="pin-antes bg-card p-5 sm:p-6">
+              <Before lang={lang} />
+              <p className="mt-5 border-t border-line pt-4 text-[0.8125rem] leading-[1.55] text-muted">
+                {d.before.note}
+              </p>
+            </div>
+
+            <div className="pin-hoy bg-card p-5 sm:p-6">
+              <After lang={lang} />
+              <p className="mt-5 border-t border-line pt-4 text-[0.8125rem] leading-[1.55] text-muted">
+                {d.after.note}
+              </p>
+            </div>
           </div>
-          <p className="mt-5 border-t border-line pt-4 text-[0.8125rem] leading-[1.55] text-muted">
-            {d.after.note}
-          </p>
+
+          {/* Descripción completa para lectores de pantalla. */}
+          <p className="sr-only">{d.alt}</p>
+
+          <figcaption className="mt-4 text-[0.8125rem] leading-[1.6] text-muted">
+            {d.caption}
+          </figcaption>
         </div>
       </div>
-
-      {/* Descripción completa para lectores de pantalla. */}
-      <p className="sr-only">{d.alt}</p>
-
-      <figcaption className="mt-4 text-[0.8125rem] leading-[1.6] text-muted">
-        {d.caption}
-      </figcaption>
     </figure>
   )
 }
