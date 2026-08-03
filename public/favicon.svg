@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <title>Sebastián Aparicio</title>
+  <!--
+    La teja se invierte con el tema del navegador para no desaparecer contra
+    la barra de pestañas: tinta sobre claro, papel sobre oscuro. El ámbar
+    cambia con ella para conservar el contraste sobre la teja.
+  -->
+  <style>
+    :root { --tile: #141311; --stroke: #FCFBF9; --mark: #FF9166; }
+    @media (prefers-color-scheme: dark) {
+      :root { --tile: #EDEBE6; --stroke: #0B0B0C; --mark: #B03A16; }
+    }
+  </style>
+  <rect width="64" height="64" rx="14" fill="var(--tile)"/>
+  <path d="M37.7 21 A7 7 0 1 0 32 32 A7 7 0 1 1 26.3 43"
+        fill="none" stroke="var(--stroke)" stroke-width="6.5" stroke-linecap="round"/>
+  <circle cx="37.7" cy="21" r="3.25" fill="var(--mark)"/>
+</svg>

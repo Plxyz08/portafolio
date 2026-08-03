@@ -1,0 +1,292 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==================================================================
+   SISTEMA VISUAL — "papel y tinta"
+   Base neutral cálida, un solo acento (ámbar quemado) y una única
+   señal semántica (verde = en producción). Todo lo demás es tinta.
+   ================================================================== */
+
+@layer base {
+  :root {
+    /* Superficies */
+    --bg: 252 251 249;
+    --bg-sunken: 246 244 240;
+    --card: 255 255 255;
+
+    /* Texto */
+    --fg: 20 19 17;
+    --fg-soft: 61 58 54;
+    --muted: 99 96 90;
+
+    /* Líneas */
+    --line: 228 224 216;
+    --line-strong: 203 198 188;
+
+    /* Acento único */
+    --accent: 176 58 22;
+    --accent-ink: 255 255 255;
+    --accent-wash: 176 58 22;
+
+    /* Acento de la marca. Va invertido respecto a --accent a propósito:
+       la teja del logo usa el color de TEXTO, así que en modo claro la
+       barra cae sobre tinta y necesita el ámbar claro. */
+    --mark-accent: 255 145 102;
+
+    /* Señal semántica: en producción */
+    --live: 17 110 68;
+
+    /* Sombras: casi imperceptibles, solo separan planos */
+    --shadow-card: 0 1px 2px rgb(20 19 17 / 0.04), 0 8px 24px -16px rgb(20 19 17 / 0.16);
+  }
+
+  .dark {
+    --bg: 11 11 12;
+    --bg-sunken: 16 16 18;
+    --card: 21 21 24;
+
+    --fg: 237 235 230;
+    --fg-soft: 199 196 190;
+    --muted: 150 146 139;
+
+    --line: 38 38 42;
+    --line-strong: 62 62 68;
+
+    --accent: 255 145 102;
+    --accent-ink: 26 12 6;
+    --accent-wash: 255 145 102;
+
+    /* En oscuro la teja es papel: la barra necesita el ámbar oscuro. */
+    --mark-accent: 176 58 22;
+
+    --live: 74 210 142;
+
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px -20px rgb(0 0 0 / 0.8);
+  }
+
+  * {
+    border-color: rgb(var(--line));
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--bg));
+    color: rgb(var(--fg));
+    font-feature-settings: 'kern', 'liga', 'calt';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  ::selection {
+    background-color: rgb(var(--accent) / 0.2);
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--accent));
+    outline-offset: 3px;
+    border-radius: 3px;
+  }
+
+  /* Reduced motion: además de anular duraciones, hay que anular los
+     delays, o un elemento con animation-fill-mode: both se quedaría
+     invisible durante su retraso. */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0ms !important;
+      transition-duration: 0.01ms !important;
+      transition-delay: 0ms !important;
+    }
+  }
+}
+
+/* ==================================================================
+   COMPONENTES
+   ================================================================== */
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  /* Medida de lectura cómoda para párrafos largos. */
+  .measure {
+    max-width: 62ch;
+  }
+
+  .section {
+    @apply scroll-mt-20 border-t border-line py-16 sm:py-24;
+  }
+
+  /* --- Tipografía ------------------------------------------------ */
+
+  .eyebrow {
+    @apply font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted;
+  }
+
+  .display {
+    font-family: var(--font-serif), Georgia, serif;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+  }
+
+  .h1 {
+    @apply text-[clamp(2.5rem,7vw,4.25rem)] font-semibold leading-[1.02] tracking-[-0.035em];
+  }
+
+  .h2 {
+    @apply text-[clamp(1.5rem,3.2vw,2.125rem)] font-semibold leading-[1.1] tracking-[-0.025em];
+  }
+
+  .h3 {
+    @apply text-[1.0625rem] font-semibold tracking-[-0.015em];
+  }
+
+  .lede {
+    @apply text-[1.0625rem] leading-[1.65] text-muted sm:text-[1.1875rem];
+  }
+
+  .prose-body p {
+    @apply mb-5 leading-[1.75] text-fg-soft last:mb-0;
+  }
+
+  /* --- Superficies ----------------------------------------------- */
+
+  .card {
+    @apply relative rounded-xl border border-line bg-card p-6 sm:p-7;
+  }
+
+  .card-hover {
+    @apply transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:border-line-strong;
+    box-shadow: none;
+  }
+
+  .card-hover:hover {
+    box-shadow: var(--shadow-card);
+  }
+
+  /* --- Enlaces y botones ----------------------------------------- */
+
+  .link {
+    @apply text-accent decoration-accent/30 underline underline-offset-[3px] transition-colors hover:decoration-accent;
+  }
+
+  .link-quiet {
+    @apply text-muted underline decoration-line-strong underline-offset-[3px] transition-colors hover:text-fg hover:decoration-current;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-[1.125rem] py-[0.6875rem] text-[0.9375rem] font-medium tracking-[-0.01em] transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent text-accent-ink hover:brightness-110 active:brightness-95;
+  }
+
+  .btn-ghost {
+    @apply btn border border-line-strong text-fg hover:border-fg hover:bg-card;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-md border border-line bg-bg px-2 py-[0.1875rem] font-mono text-[0.6875rem] tracking-tight text-muted;
+  }
+
+  /* --- Desplegable de capturas -----------------------------------
+     <details> nativo: cero JavaScript, navegable por teclado y con el
+     estado abierto/cerrado anunciado por el lector de pantalla sin que
+     haya que gestionarlo a mano. El intercambio de rótulo y el giro del
+     chevron van aquí y no en variantes de Tailwind para no depender de
+     que `group-open` esté disponible. */
+
+  .disclosure > summary {
+    @apply inline-flex cursor-pointer list-none items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.1em] text-muted transition-colors;
+  }
+
+  .disclosure > summary:hover {
+    @apply text-fg;
+  }
+
+  .disclosure > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .disclosure > summary .chevron {
+    transition: transform 0.2s ease;
+  }
+
+  .disclosure[open] > summary .chevron {
+    transform: rotate(90deg);
+  }
+
+  .disclosure > summary .cerrar,
+  .disclosure[open] > summary .abrir {
+    display: none;
+  }
+
+  .disclosure[open] > summary .cerrar {
+    display: inline;
+  }
+
+  /* --- Rótulo de sección ----------------------------------------- */
+
+  .rule-label {
+    @apply flex items-center gap-3 font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-muted;
+  }
+
+  .rule-label::after {
+    content: '';
+    @apply h-px flex-1 bg-line;
+  }
+}
+
+/* ==================================================================
+   ANIMACIÓN DE ENTRADA — solo CSS, sin JS, sin IntersectionObserver.
+   El elemento SIEMPRE está montado en el DOM: la animación solo
+   afecta a su pintura, nunca a su presencia en el HTML servido.
+   ================================================================== */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 12px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@layer utilities {
+  .rise {
+    animation: rise 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  .rise-1 {
+    animation-delay: 60ms;
+  }
+  .rise-2 {
+    animation-delay: 120ms;
+  }
+  .rise-3 {
+    animation-delay: 180ms;
+  }
+  .rise-4 {
+    animation-delay: 240ms;
+  }
+  .rise-5 {
+    animation-delay: 300ms;
+  }
+  .rise-6 {
+    animation-delay: 360ms;
+  }
+}
