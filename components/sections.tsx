@@ -139,7 +139,7 @@ export function Metrics({ lang }: { lang: Lang }) {
           {c.sections.metrics.title}
         </h2>
 
-        <dl className="mt-10 grid grid-cols-2 gap-x-6 gap-y-10 sm:gap-x-10 lg:grid-cols-4">
+        <dl className="mt-10 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-3 sm:gap-x-10">
           {metrics.map((m, i) => (
             <div
               key={m.value + t(m.label, lang)}

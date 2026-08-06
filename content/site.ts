@@ -17,14 +17,37 @@ export const LANGS: Lang[] = ['es', 'en']
 /* 1. IDENTIDAD                                                        */
 /* ------------------------------------------------------------------ */
 
+/**
+ * URL pública del sitio. De aquí salen los canónicos, el sitemap, el JSON-LD
+ * y las etiquetas OG, así que apuntar a un dominio que no sirve el sitio hace
+ * que Google no indexe nada.
+ *
+ * Se resuelve en este orden:
+ *   1. NEXT_PUBLIC_SITE_URL — tu dominio, cuando lo tengas.
+ *   2. La URL de producción que Vercel inyecta sola en el despliegue.
+ *   3. localhost, para desarrollo.
+ *
+ * Así el sitio queda correcto desde el primer despliegue sin configurar nada,
+ * y cambiar de dominio después es una sola variable de entorno.
+ */
+function urlDelSitio(): string {
+  const propia = process.env.NEXT_PUBLIC_SITE_URL
+  if (propia) return propia.replace(/\/$/, '')
+
+  const vercel =
+    process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_PROJECT_PRODUCTION_URL
+  if (vercel) return `https://${vercel}`
+
+  return 'http://localhost:3000'
+}
+
 export const identity = {
   /** Nombre profesional único. Idéntico en CV, LinkedIn, GitHub y dominio. */
   name: 'Sebastián Aparicio',
   /** Solo se usa en documentos legales, no en el sitio. */
   legalName: 'Johan Sebastián Aparicio Muñoz',
 
-  // PENDIENTE: cambiar cuando compres el dominio definitivo.
-  url: 'https://sebastianaparicio.dev',
+  url: urlDelSitio(),
 
   email: 'sebastianmunoz603@gmail.com',
   phone: '+573015914917',
@@ -39,8 +62,7 @@ export const identity = {
 
   linkedin: 'https://www.linkedin.com/in/sebastian-aparicio00',
 
-  // PENDIENTE: usuario real de GitHub.
-  github: 'https://github.com/COMPLETAR-USUARIO',
+  github: 'https://github.com/Plxyz08',
 
   photo: '/img/sebastian-aparicio.webp',
 
@@ -78,10 +100,9 @@ export type Metric = {
 }
 
 /**
- * Cuatro cifras que cuentan escala, arquitectura, velocidad y honestidad.
- * Todas se pueden contrastar contra el resto del sitio: los negocios salen de
- * la experiencia, el despliegue y los cinco meses del caso de estudio, y el
- * 2/4 del listado de productos.
+ * Tres cifras que cuentan escala, velocidad y honestidad. Todas se pueden
+ * contrastar contra el resto del sitio: los negocios salen de la experiencia,
+ * los meses del caso de estudio y el 3/4 del listado de productos.
  */
 export const metrics: Metric[] = [
   {
@@ -92,14 +113,7 @@ export const metrics: Metric[] = [
     },
   },
   {
-    value: '1',
-    label: {
-      es: 'despliegue multi-tenant sostiene la operación de más de 10 empresas',
-      en: 'multi-tenant deployment runs operations for more than 10 companies',
-    },
-  },
-  {
-    value: '5',
+    value: '6',
     label: {
       es: 'meses de software a la medida a SaaS multi-tenant en producción',
       en: 'months from custom software to multi-tenant SaaS in production',
@@ -502,8 +516,8 @@ export const products: Product[] = [
     status: 'production',
     metric: { es: '+10 negocios · desde diciembre 2025', en: '+10 businesses · since December 2025' },
     summary: {
-      es: 'Proyecto con socios, societariamente aparte de AutomatIQ. Sistema de administración para distribuidores mayoristas: nació en diciembre de 2025 como software a la medida de un solo negocio y en mayo de 2026 lo reescribí como SaaS multi-tenant.',
-      en: 'A venture with partners, a separate company from AutomatIQ. Management system for wholesale distributors: it started in December 2025 as custom software for a single business, and in May 2026 I rebuilt it as multi-tenant SaaS.',
+      es: 'Proyecto con socios, societariamente aparte de AutomatIQ. Sistema de administración para distribuidores mayoristas: nació en diciembre de 2025 como software a la medida de un solo negocio y en junio de 2026 lo reescribí como SaaS multi-tenant.',
+      en: 'A venture with partners, a separate company from AutomatIQ. Management system for wholesale distributors: it started in December 2025 as custom software for a single business, and in June 2026 I rebuilt it as multi-tenant SaaS.',
     },
     features: {
       es: ['Ventas y facturación', 'Inventario', 'Tienda en línea', 'Gestión de empleados', 'Nómina'],
@@ -617,8 +631,8 @@ export const caseStudies: CaseStudy[] = [
     slug: 'gran-mayorista',
     product: 'Gran Mayorista',
     title: {
-      es: 'De software a la medida a SaaS multi-tenant en cinco meses',
-      en: 'From custom software to multi-tenant SaaS in five months',
+      es: 'De software a la medida a SaaS multi-tenant en seis meses',
+      en: 'From custom software to multi-tenant SaaS in six months',
     },
     summary: {
       es: 'Gran Mayorista empezó resolviendo el problema de un solo distribuidor. Cuando otros negocios del mismo sector lo pidieron, la decisión no fue vender copias del sistema: fue reescribir la base para que un solo despliegue sirviera a muchas empresas sin que sus datos se tocaran nunca.',
