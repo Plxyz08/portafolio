@@ -171,7 +171,7 @@ export const copy: Record<Lang, Copy> = {
       products: {
         title: 'Productos',
         intro:
-          'AutomatIQ es mi empresa de soluciones SaaS verticales para pymes colombianas; Gran Mayorista es un proyecto aparte, con socios. Cada estado está declarado tal como es hoy.',
+          'AutomatIQ es mi empresa de soluciones SaaS verticales para pymes colombianas; Gran Mayorista es un proyecto aparte, con socios. Cada producto es multi-tenant: un solo despliegue atiende a todos sus negocios y una corrección llega a todos a la vez. Cada estado está declarado tal como es hoy.',
       },
       productsAutomatiq: {
         title: 'AutomatIQ',
@@ -257,7 +257,7 @@ export const copy: Record<Lang, Copy> = {
       products: {
         title: 'Products',
         intro:
-          'AutomatIQ is my company, building vertical SaaS for Colombian small and medium businesses; Gran Mayorista is a separate venture, with partners. Each status below is stated exactly as it stands today.',
+          'AutomatIQ is my company, building vertical SaaS for Colombian small and medium businesses; Gran Mayorista is a separate venture, with partners. Every product is multi-tenant: a single deployment serves all of its businesses, and one fix reaches all of them at once. Each status below is stated exactly as it stands today.',
       },
       productsAutomatiq: {
         title: 'AutomatIQ',
@@ -979,7 +979,7 @@ export const aiPractice: Record<
 > = {
   es: {
     title: 'IA en el flujo de trabajo',
-    lede: 'La IA es parte de cómo construyo, no una línea suelta en el currículum. Es también una de las razones por las que un solo desarrollador sostiene cuatro productos en operación.',
+    lede: 'La IA es parte de cómo construyo, no una línea suelta en el currículum. Es también una de las razones por las que cuatro productos en operación no consumen cuatro veces mi tiempo.',
     points: [
       {
         k: 'Cómo la uso',
@@ -997,7 +997,7 @@ export const aiPractice: Record<
   },
   en: {
     title: 'AI in my workflow',
-    lede: 'AI is part of how I build, not a line on a résumé. It is also one of the reasons a single developer keeps four products running in production.',
+    lede: 'AI is part of how I build, not a line on a résumé. It is also one of the reasons four products in production do not take four times the work.',
     points: [
       {
         k: 'How I use it',
