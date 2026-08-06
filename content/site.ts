@@ -100,11 +100,19 @@ export type Metric = {
 }
 
 /**
- * Tres cifras que cuentan escala, velocidad y honestidad. Todas se pueden
- * contrastar contra el resto del sitio: los negocios salen de la experiencia,
- * los meses del caso de estudio y el 3/4 del listado de productos.
+ * Cuatro cifras. La primera es la que filtran los reclutadores; las tres
+ * siguientes son las que diferencian. Todas se contrastan contra el resto del
+ * sitio: los años y los negocios salen de la experiencia, los meses del caso
+ * de estudio y el 3/4 del listado de productos.
  */
 export const metrics: Metric[] = [
+  {
+    value: '+3',
+    label: {
+      es: 'años construyendo y operando software en producción',
+      en: 'years building and operating software in production',
+    },
+  },
   {
     value: '+21',
     label: {
