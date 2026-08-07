@@ -23,6 +23,21 @@ for (const { lang, file } of FILES) {
   const page = await browser.newPage()
   await page.emulateMedia({ media: 'print', colorScheme: 'light' })
   await page.goto(`${BASE}/${lang}/cv`, { waitUntil: 'networkidle' })
+
+  // El CV lleva impresa la URL pública del sitio, y esa sale de
+  // NEXT_PUBLIC_SITE_URL en tiempo de compilación. Si se genera el PDF sobre
+  // un build sin esa variable, el documento acaba anunciando localhost.
+  const enlaces = await page.$$eval('.cv a[href]', (as) => as.map((a) => a.href))
+  const externos = enlaces.filter((h) => h.startsWith('http'))
+  const malos = externos.filter((h) => /localhost|127\.0\.0\.1/.test(h))
+  if (malos.length) {
+    throw new Error(
+      `El CV apunta a localhost (${malos[0]}). Recompila con:\n` +
+        '  NEXT_PUBLIC_SITE_URL=https://tu-dominio npm run build',
+    )
+  }
+  console.log(`  ${lang}: ${externos.length} enlaces externos, ninguno a localhost`)
+
   await page.pdf({
     path: `${OUT}/${file}`,
     format: 'A4',

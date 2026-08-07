@@ -145,7 +145,10 @@ export function Metrics({ lang }: { lang: Lang }) {
               key={m.value + t(m.label, lang)}
               className="reveal relative border-t border-line pt-6"
             >
-              <span aria-hidden="true" className="absolute -top-px left-0 h-px w-9 bg-accent" />
+              <span
+                aria-hidden="true"
+                className={`absolute -top-px left-0 bg-accent ${m.lead ? "h-0.5 w-16" : "h-px w-9"}`}
+              />
 
               <span
                 aria-hidden="true"
@@ -154,10 +157,16 @@ export function Metrics({ lang }: { lang: Lang }) {
                 {String(i + 1).padStart(2, '0')}
               </span>
 
-              <dt className="display flex items-baseline text-[clamp(3.5rem,8.5vw,5.25rem)] tabular-nums">
+              <dt
+                className={`display flex items-baseline tabular-nums ${
+                  m.lead
+                    ? "text-accent text-[clamp(4.25rem,10vw,6.5rem)]"
+                    : "text-[clamp(3.5rem,8.5vw,5.25rem)]"
+                }`}
+              >
                 {m.value.startsWith('+') ? (
                   <>
-                    <span className="text-[0.45em] text-accent">+</span>
+                    <span className={`text-[0.45em] ${m.lead ? "" : "text-accent"}`}>+</span>
                     <span>{m.value.slice(1)}</span>
                   </>
                 ) : (

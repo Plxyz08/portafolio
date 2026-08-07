@@ -94,6 +94,8 @@ export const knowsAbout = [
 
 export type Metric = {
   value: string
+  /** La cifra que encabeza el bloque: va mayor y en color de acento. */
+  lead?: boolean
   /** Se compone junto al número, en cuerpo menor: "2⁄4". */
   suffix?: string
   label: { es: string; en: string }
@@ -107,6 +109,7 @@ export type Metric = {
  */
 export const metrics: Metric[] = [
   {
+    lead: true,
     value: '+3',
     label: {
       es: 'años construyendo y operando software en producción',

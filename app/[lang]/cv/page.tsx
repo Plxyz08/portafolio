@@ -49,16 +49,46 @@ export async function generateMetadata({
   }
 }
 
+/**
+ * Estilos de impresión.
+ *
+ * En vez de forzar `color: #111` sobre todo —que aplastaba también los
+ * títulos y los enlaces— se redefine la paleta a valores de papel. Todo lo
+ * que hay debajo se adapta solo, el color de acento sobrevive, y si alguien
+ * imprime con el modo oscuro activo no sale texto blanco sobre blanco.
+ */
 const CV_STYLE = `
   @page { size: A4; margin: 14mm 15mm; }
   @media print {
+    :root, .dark {
+      --bg: 255 255 255;
+      --card: 255 255 255;
+      --fg: 17 17 17;
+      --fg-soft: 51 51 51;
+      --muted: 88 88 88;
+      --line: 208 208 208;
+      --line-strong: 170 170 170;
+      --accent: 11 99 206;
+    }
     header[data-site-header], footer[data-site-footer], [data-no-print] { display: none !important; }
-    body { background: #fff !important; color: #111 !important; }
-    a { color: #111 !important; text-decoration: none !important; }
+    body { background: #fff !important; }
     .cv { max-width: none !important; padding: 0 !important; }
     .cv-section { break-inside: avoid; }
+    /* El subrayado estorba en papel; el color ya indica que es un enlace, y
+       en el PDF la anotación sigue siendo pulsable igual. */
+    .cv a { text-decoration: none; }
   }
 `
+
+/** `https://www.linkedin.com/in/x` -> `linkedin.com/in/x`. */
+function sinProtocolo(url: string): string {
+  return url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '')
+}
+
+/** Punto medio entre datos de contacto, con espacio no separable a los lados. */
+function Separador() {
+  return <span aria-hidden="true">{' · '}</span>
+}
 
 export default async function CvPage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params
@@ -99,29 +129,36 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
       <style dangerouslySetInnerHTML={{ __html: CV_STYLE }} />
 
       <div className="cv wrap max-w-3xl py-10 text-[13px] leading-[1.5]">
-        <header className="border-b border-line pb-4">
-          <h1 className="text-2xl font-bold tracking-tight">{identity.name}</h1>
-          <p className="mt-1 text-sm font-medium">{c.role}</p>
-          <p className="mt-2 text-xs text-muted">
-            {identity.address.locality}, {t(identity.address.countryName, l)} ·{' '}
-            {identity.phoneDisplay} · {identity.email}
+        <header className="border-b border-line pb-5 text-center">
+          <h1 className="text-[1.75rem] font-bold tracking-[-0.03em]">{identity.name}</h1>
+          <p className="mt-1 text-sm font-semibold text-accent">{c.role}</p>
+
+          <p className="mt-3 text-xs text-muted">
+            {identity.address.locality}, {t(identity.address.countryName, l)}
+            <Separador />
+            <a href={`tel:${identity.phone}`}>{identity.phoneDisplay}</a>
+            <Separador />
+            <a href={`mailto:${identity.email}`}>{identity.email}</a>
           </p>
-          <p className="mt-1 text-xs text-muted">
-            {identity.url.replace('https://', '')} ·{' '}
-            {identity.linkedin.replace('https://www.', '')} ·{' '}
-            {identity.github.includes('COMPLETAR')
-              ? '[github.com/usuario — completar]'
-              : identity.github.replace('https://', '')}
+
+          {/* Enlaces reales: en el PDF quedan como anotaciones pulsables, no
+              como texto suelto que haya que copiar a mano. */}
+          <p className="mt-1.5 text-xs text-accent">
+            <a href={identity.url}>{sinProtocolo(identity.url)}</a>
+            <Separador />
+            <a href={identity.linkedin}>{sinProtocolo(identity.linkedin)}</a>
+            <Separador />
+            <a href={identity.github}>{sinProtocolo(identity.github)}</a>
           </p>
         </header>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.summary}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.summary}</h2>
           <p className="mt-2 text-muted">{summary}</p>
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.experience}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.experience}</h2>
           {jobs.map((job) => (
             <div key={job.id} className="mt-4">
               <h3 className="font-semibold">
@@ -141,7 +178,7 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.projects}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.projects}</h2>
           <ul className="mt-2 space-y-2 text-muted">
             {featured.map((p) => (
               <li key={p.id}>
@@ -168,7 +205,7 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.education}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.education}</h2>
           <ul className="mt-2 space-y-1.5">
             {education.map((e) => (
               <li key={e.id}>
@@ -182,12 +219,12 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.certs}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.certs}</h2>
           <p className="mt-2 text-muted">{t(certifications, l)}</p>
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.skills}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.skills}</h2>
           <ul className="mt-2 space-y-1 text-muted">
             {stack.map((g) => (
               <li key={g.group.en}>
@@ -198,7 +235,7 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
         </section>
 
         <section className="cv-section mt-6">
-          <h2 className="text-xs font-bold uppercase tracking-[0.14em]">{L.langs}</h2>
+          <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.langs}</h2>
           <ul className="mt-2 space-y-0.5 text-muted">
             {languages[l].map((x) => (
               <li key={x}>{x}</li>
