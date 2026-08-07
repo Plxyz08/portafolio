@@ -73,7 +73,9 @@ const CV_STYLE = `
     header[data-site-header], footer[data-site-footer], [data-no-print] { display: none !important; }
     body { background: #fff !important; }
     .cv { max-width: none !important; padding: 0 !important; }
-    .cv-section { break-inside: avoid; }
+    .cv-section h2 { break-after: avoid; }
+    .cv-entry { break-inside: avoid; }
+    li { break-inside: avoid; }
     /* El subrayado estorba en papel; el color ya indica que es un enlace, y
        en el PDF la anotación sigue siendo pulsable igual. */
     .cv a { text-decoration: none; }
@@ -160,7 +162,7 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
         <section className="cv-section mt-6">
           <h2 className="border-b border-line pb-1 text-xs font-bold uppercase tracking-[0.14em] text-accent">{L.experience}</h2>
           {jobs.map((job) => (
-            <div key={job.id} className="mt-4">
+            <div key={job.id} className="cv-entry mt-4">
               <h3 className="font-semibold">
                 {t(job.org, l)} — {t(job.title, l)}
               </h3>
