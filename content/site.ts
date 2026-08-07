@@ -31,14 +31,20 @@ export const LANGS: Lang[] = ['es', 'en']
  * y cambiar de dominio después es una sola variable de entorno.
  */
 function urlDelSitio(): string {
-  const propia = process.env.NEXT_PUBLIC_SITE_URL
-  if (propia) return propia.replace(/\/$/, '')
-
   const vercel =
     process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_PROJECT_PRODUCTION_URL
-  if (vercel) return `https://${vercel}`
 
-  return 'http://localhost:3000'
+  const bruta = process.env.NEXT_PUBLIC_SITE_URL || (vercel ? `https://${vercel}` : '')
+  if (!bruta) return 'http://localhost:3000'
+
+  // Se queda solo con el origen. Sin esto, pegar la URL completa que se ve en
+  // el navegador —con /es al final— produce canónicos como /es/es, un sitemap
+  // lleno de 404 y un sitio que Google descarta entero.
+  try {
+    return new URL(/^https?:\/\//i.test(bruta) ? bruta : `https://${bruta}`).origin
+  } catch {
+    return 'http://localhost:3000'
+  }
 }
 
 export const identity = {
