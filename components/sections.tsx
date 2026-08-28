@@ -758,11 +758,14 @@ export function Stack({ lang }: { lang: Lang }) {
                 {t(g.group, lang)}
               </dt>
               <dd className="flex flex-wrap gap-1.5">
-                {g.items.map((i) => (
-                  <span key={i} className="chip">
-                    {i}
-                  </span>
-                ))}
+                {g.items.map((i) => {
+                  const label = t(i, lang)
+                  return (
+                    <span key={label} className="chip">
+                      {label}
+                    </span>
+                  )
+                })}
               </dd>
             </div>
           ))}

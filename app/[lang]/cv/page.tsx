@@ -79,6 +79,13 @@ const CV_STYLE = `
     /* El subrayado estorba en papel; el color ya indica que es un enlace, y
        en el PDF la anotación sigue siendo pulsable igual. */
     .cv a { text-decoration: none; }
+    /* El CV cabe en dos hojas. En pantalla el aire ayuda a leer; en papel una
+       tercera hoja con cuatro líneas sueltas se lee como relleno, así que el
+       espaciado se comprime solo al imprimir. */
+    .cv { line-height: 1.45; }
+    .cv-section { margin-top: 17px !important; }
+    .cv-entry { margin-top: 11px !important; }
+    .cv header { padding-bottom: 15px !important; }
   }
 `
 
@@ -230,7 +237,8 @@ export default async function CvPage({ params }: { params: Promise<{ lang: strin
           <ul className="mt-2 space-y-1 text-muted">
             {stack.map((g) => (
               <li key={g.group.en}>
-                <span className="font-semibold text-fg">{t(g.group, l)}:</span> {g.items.join(', ')}
+                <span className="font-semibold text-fg">{t(g.group, l)}:</span>{' '}
+                {g.items.map((i) => t(i, l)).join(', ')}
               </li>
             ))}
           </ul>

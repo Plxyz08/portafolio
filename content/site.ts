@@ -406,6 +406,7 @@ export const jobs: Job[] = [
         'Desarrollo de interfaces con React, Next.js y TypeScript, aplicando renderizado en servidor, regeneración estática incremental, code splitting y optimización de Core Web Vitals.',
         'Integración con APIs REST y GraphQL, manejo de estado global y autenticación de usuarios con JWT y OAuth2.',
         'Alcance ampliado más allá del frontend: entrega de MVPs completos, incluyendo backend, y configuración de infraestructura en Google Cloud Platform.',
+        'Trabajo con RAG y embeddings como base de conocimiento para agentes de inteligencia artificial: chunking, recuperación semántica e inyección de contexto.',
         'Pruebas unitarias y de integración con Jest y React Testing Library; code reviews, documentación técnica y ceremonias ágiles bajo Scrum.',
         'Proyectos empresariales para clientes de la región; nombres y detalles sujetos a acuerdo de confidencialidad.',
       ],
@@ -413,6 +414,7 @@ export const jobs: Job[] = [
         'Build user interfaces with React, Next.js and TypeScript, applying server-side rendering, incremental static regeneration, code splitting and Core Web Vitals optimization.',
         'Integrate REST and GraphQL APIs, manage global state and implement user authentication with JWT and OAuth2.',
         'Scope extended beyond frontend: delivery of complete MVPs including backend, and setup of Google Cloud Platform infrastructure.',
+        'Work with RAG and embeddings as a knowledge base for AI agents: chunking, semantic retrieval and context injection.',
         'Unit and integration tests with Jest and React Testing Library; code reviews, technical documentation and agile ceremonies under Scrum.',
         'Enterprise projects for clients across the region; client names and details are covered by a confidentiality agreement.',
       ],
@@ -1050,7 +1052,7 @@ export const aiPractice: Record<
 /* 9. STACK                                                            */
 /* ------------------------------------------------------------------ */
 
-export const stack: { group: { es: string; en: string }; items: string[] }[] = [
+export const stack: { group: { es: string; en: string }; items: Localized[] }[] = [
   {
     group: { es: 'Frontend', en: 'Frontend' },
     items: ['React', 'Next.js', 'TypeScript', 'Vue 3', 'Quasar', 'Tailwind CSS'],
@@ -1061,23 +1063,62 @@ export const stack: { group: { es: string; en: string }; items: string[] }[] = [
   },
   {
     group: { es: 'Backend', en: 'Backend' },
-    items: ['Node.js', 'Express', 'APIs REST', 'GraphQL', 'JWT', 'OAuth2'],
+    items: [
+      'Node.js',
+      'Express',
+      { es: 'APIs REST', en: 'REST APIs' },
+      'GraphQL',
+      'JWT',
+      'OAuth2',
+    ],
   },
   {
     group: { es: 'Datos', en: 'Data' },
-    items: ['MySQL', 'MongoDB', 'Supabase'],
+    items: ['PostgreSQL', 'MySQL', 'MongoDB', 'Supabase'],
   },
   {
     group: { es: 'Cloud e infraestructura', en: 'Cloud & infrastructure' },
-    items: ['Google Cloud Platform', 'Vercel', 'Arquitectura multi-tenant', 'CI/CD'],
+    items: [
+      'Google Cloud Platform',
+      'Vercel',
+      { es: 'Arquitectura multi-tenant', en: 'Multi-tenant architecture' },
+      'CI/CD',
+    ],
+  },
+  {
+    group: { es: 'Inteligencia artificial', en: 'Artificial intelligence' },
+    items: [
+      'RAG',
+      { es: 'Embeddings', en: 'Embeddings' },
+      {
+        es: 'Desarrollo asistido por IA (Claude Code, Cursor) con revisión y pruebas del código generado',
+        en: 'AI-assisted development (Claude Code, Cursor) with review and testing of generated code',
+      },
+    ],
   },
   {
     group: { es: 'Integraciones', en: 'Integrations' },
-    items: ['Facturación electrónica DIAN (Factus)', 'Wompi', 'WhatsApp', 'Cloudinary'],
+    items: [
+      {
+        es: 'Facturación electrónica DIAN (Factus)',
+        en: 'Colombian electronic invoicing — DIAN (Factus)',
+      },
+      'Wompi',
+      'WhatsApp',
+      'Cloudinary',
+    ],
   },
   {
     group: { es: 'Prácticas', en: 'Practices' },
-    items: ['Git', 'Jest', 'React Testing Library', 'Code review', 'Scrum', 'Azure DevOps', 'Jira'],
+    items: [
+      'Git',
+      'Jest',
+      'React Testing Library',
+      { es: 'Code review', en: 'Code review' },
+      'Scrum',
+      'Azure DevOps',
+      'Jira',
+    ],
   },
 ]
 
@@ -1139,8 +1180,14 @@ export const certifications = {
 }
 
 export const languages = {
-  es: ['Español — nativo', 'Inglés — básico: leo documentación técnica y trabajo por escrito; conversación en formación activa'],
-  en: ['Spanish — native', 'English — basic: I read technical documentation and work in writing; conversational level actively in progress'],
+  es: [
+    'Español — nativo',
+    'Inglés — intermedio: leo documentación técnica y trabajo por escrito sin dificultad; conversación en formación activa',
+  ],
+  en: [
+    'Spanish — native',
+    'English — intermediate: I read technical documentation and work in writing without difficulty; conversation actively improving',
+  ],
 }
 
 /* ------------------------------------------------------------------ */
